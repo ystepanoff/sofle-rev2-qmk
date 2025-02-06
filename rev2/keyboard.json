@@ -5,7 +5,7 @@
     "development_board": "promicro",
     "usb": {
         "pid": "0x0287",
-        "device_version": "1.0"
+        "device_version": "1.0.0"
     },
     "matrix_pins": {
         "cols": ["F6", "F7", "B1", "B3", "B2", "B6"],
