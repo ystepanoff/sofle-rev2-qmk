@@ -250,7 +250,6 @@ bool oled_task_user(void) {
     if (is_keyboard_master()) {
 	print_status_narrow();
     } else {
-        // Right OLED - Slave Ha4lf
         oled_clear();
 	oled_write_raw_P(image, sizeof(image));
     }
