@@ -206,6 +206,7 @@ const char PROGMEM image[] = {
 #ifdef OLED_ENABLE
 
 static void print_status_narrow(void) {
+    char str[10];
     oled_write_P(PSTR("\n\n"), false);
     switch (get_highest_layer(layer_state)) {
         case 0:
@@ -215,7 +216,6 @@ static void print_status_narrow(void) {
             oled_write_ln_P(PSTR("Clmk"), false);
             break;
         default:
-            char str[10];
             sprintf(str, "%d", get_highest_layer(layer_state));
             oled_write_P(PSTR(str), false);
             break;
