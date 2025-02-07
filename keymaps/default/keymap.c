@@ -209,13 +209,13 @@ static void print_status_narrow(void) {
     oled_write_P(PSTR("\n\n"), false);
     switch (get_highest_layer(layer_state)) {
         case 0:
-            oled_write_ln_P(PSTR("Qwrt"), false);
+            oled_write_ln_P(PSTR("COLEMAK"), false);
             break;
         case 1:
             oled_write_ln_P(PSTR("Clmk"), false);
             break;
         default:
-            oled_write_P(PSTR("Mod\n"), false);
+            oled_write_P(PSTR("Mod\n" + (char)(get_highest_layer(layer_state) + '0')), false);
             break;
     }
     oled_write_P(PSTR("\n\n"), false);
