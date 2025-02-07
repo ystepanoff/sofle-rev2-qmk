@@ -9,6 +9,7 @@
 enum sofle_layers {
     /* _M_XYZ = Mac Os, _W_XYZ = Win/Linux */
     _COLEMAK_DH,
+    _COLEMAK_DH,
     _RAISE,
     _LOWER
 };
