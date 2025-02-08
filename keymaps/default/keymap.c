@@ -225,36 +225,21 @@ const char PROGMEM image[] = {
 
 #ifdef OLED_ENABLE
 static void print_status_narrow(void) {
-    char str[10];
-    oled_write_P(PSTR("\n\n"), false);
     switch (get_highest_layer(layer_state)) {
         case 0:
-            oled_write_ln_P(PSTR("CLMK"), false);
+            oled_write_P(PSTR("BASE\n\n"), false);
             break;
         case 1:
-            oled_write_ln_P(PSTR("Clmk"), false);
-            break;
-        default:
-            sprintf(str, "%d", get_highest_layer(layer_state));
-            oled_write_P(PSTR(str), false);
-            break;
-    }
-    oled_write_P(PSTR("\n\n"), false);
-    oled_write_ln_P(PSTR("LAYER"), false);
-    switch (get_highest_layer(layer_state)) {
-        case 0:
-            oled_write_P(PSTR("Base\n"), false);
-            break;
-        case 1:
-            oled_write_P(PSTR("Lower"), false);
+            oled_write_P(PSTR("UPPER\n\n"), false);
             break;
         case 2:
-            oled_write_P(PSTR("Raise"), false);
+            oled_write_P(PSTR("LOWER\n\n"), false);
             break;
         case 3:
-            oled_write_P(PSTR("Adjust"), false);
+            oled_write_P(PSTR("ADJUST\n\n"), false);
+            break;
         default:
-            oled_write_ln_P(PSTR("Undef"), false);
+            oled_write_ln_P(PSTR("Undef\n\n"), false);
     }
     oled_write_P(PSTR("\n\n"), false);
     led_t led_usb_state = host_keyboard_led_state();
