@@ -166,8 +166,8 @@ const char PROGMEM run[2][ANIM_SIZE] = {
     }
 };
 
-// bark
-const char PROGMEM bark[2][ANIM_SIZE] = {
+// caps
+const char PROGMEM caps[2][ANIM_SIZE] = {
     {
         0x00, 0xc0, 0x20, 0x10,
         0xd0, 0x30, 0x00, 0x00,

@@ -29,7 +29,7 @@ void animate_pet(int x, int y) {
     current_frame = (current_frame + 1) % 2;
     led_t led_usb_state = host_keyboard_led_state();
     if (led_usb_state.caps_lock) {
-        oled_write_raw_P(bark[current_frame], ANIM_SIZE);
+        oled_write_raw_P(caps[current_frame], ANIM_SIZE);
     } else if (is_pet_sneaking) {
         oled_write_raw_P(sneak[current_frame], ANIM_SIZE);
     } else if (current_wpm <= MIN_WALK_SPEED) {
