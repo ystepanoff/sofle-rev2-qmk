@@ -6,8 +6,8 @@
 enum sofle_layers {
     /* _M_XYZ = Mac Os, _W_XYZ = Win/Linux */
     _COLEMAK_DH,
-    _RAISE,
     _LOWER,
+    _RAISE,
     _ADJUST,
 };
 
@@ -42,29 +42,30 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                     KC_LCTL, KC_LALT, KC_LGUI,  TL_LOWR, KC_SPC,             KC_ENT, TL_UPPR, KC_RGUI, KC_RALT, KC_RCTL
     ),
 
-    /* RAISE
+    /* LOWER
     * ,-----------------------------------------.                    ,-----------------------------------------.
-    * |      |  F1  |  F2  |  F3  |  F4  |  F5  |                    |  F6  |  F7  |  F8  |  F9  | F10  | F11  |
+    * |      |      |      |      |      |      |                    |      |      |      |      |      |      |
     * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
-    * |  `   |   !  |   @  |   #  |   $  |   %  |                    |   ^  |   &  |   *  |   (  |   )  | F12  |
+    * |      | INS  |PRSCR | MENU |      |      |                    | PGUP | PWRD |  UP  | NWRD |      | BSPC |
     * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
-    * | TAB  |   =  |   -  |   +  |   {  |   }  |-------.    ,-------|   ;  |   :  |   _  |   [  |   ]  |   |  |
-    * |------+------+------+------+------+------|  MUTE |    |       |------+------+------+------+------+------|
-    * |LSHIFT|      |      |      |      |      |-------|    |-------|      |      |      |      |      |RSHIFT|
-    * `-----------------------------------------/       /     \      \-----------------------------------------'
-    *            | LCTRL| LALT | LGUI |LOWER | / SPACE /       \ENTER \  |RAISE | RGUI | RALT |RCTRL |
-    *            |      |      |      |      |/       /         \      \ |      |      |      |      |
-    *            `-----------------------------------'           '------''---------------------------'
+    * | CAPS |      |      |      |      |      |--------.   ,-------| PGDN | LEFT | DOWN |RIGHT | DEL  |      |
+    * |------+------+------+------+------+------|  MUTE  |   |       |------+------+------+------+------+------|
+    * |LSHIFT| UNDO |  CUT | COPY | PASTE|      |--------|   |-------|      | LSTR |      | LEND |      |RSHIFT|
+    * `-----------------------------------------/       /     \       \-----------------------------------------'
+    *            |LCTRL | LALT | LGUI |LOWER | / SPACE /       \ ENTER \  |RAISE | RGUI | RALT |RCTRL |
+    *            |      |      |      |      |/       /         \       \ |      |      |      |      |
+    *            `-----------------------------------'           '-------''---------------------------'
     */
-    [_RAISE] = LAYOUT(
-        _______,  KC_F1,   KC_F2,   KC_F3,    KC_F4,    KC_F5,                          KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,
-        KC_GRV,   KC_EXLM, KC_AT,   KC_HASH,  KC_DLR,   KC_PERC,                        KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_F12,
-        KC_TAB,   KC_EQL,  KC_MINS, KC_PLUS,  KC_LCBR,  KC_RCBR,                        KC_SCLN, KC_COLN, KC_UNDS, KC_LBRC, KC_RBRC, KC_PIPE,
-        KC_LSFT,  _______, _______, _______,  _______,  _______, KC_MUTE,      XXXXXXX, _______, _______, _______, _______, _______, KC_RSFT,
-                         KC_LCTL, KC_LALT, KC_LGUI,  TL_LOWR, KC_SPC,           KC_ENT, TL_UPPR,  KC_RGUI, KC_RALT, KC_RCTL
+    [_LOWER] = LAYOUT(
+        _______, _______, _______, _______, _______, _______,                        _______, _______,  _______, _______,   _______,    _______,
+        XXXXXXX, KC_INS,  KC_PSCR, KC_APP,  XXXXXXX, XXXXXXX,                        KC_PGUP, KC_PRVWD, KC_UP,   KC_NXTWD,  C(KC_BSPC), KC_BSPC,
+        KC_CAPS, _______, _______, _______, XXXXXXX, XXXXXXX,                        KC_PGDN, KC_LEFT,  KC_DOWN, KC_RGHT,   KC_DEL,     _______,
+        _______, KC_UNDO, KC_CUT, KC_COPY, KC_PASTE, XXXXXXX,  _______,    _______,  XXXXXXX, KC_LSTRT, XXXXXXX, KC_LEND,   XXXXXXX,    _______,
+                        _______, _______, _______, _______, _______,           _______, _______, _______, _______, _______
     ),
 
-    /* LOWER
+    /* RAISE
+/* LOWER
     * ,-----------------------------------------.                     ,-----------------------------------------.
     * |      |      |      |      |      |      |                     |      |      |      |      |      |      |
     * |------+------+------+------+------+------|                     |------+------+------+------+------+------|
@@ -85,7 +86,27 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, KC_UNDO, KC_CUT, KC_COPY, KC_PASTE, XXXXXXX,  _______,    _______,  XXXXXXX, KC_LSTRT, XXXXXXX, KC_LEND,   XXXXXXX,    _______,
                         _______, _______, _______, _______, _______,           _______, _______, _______, _______, _______
     ),
-
+    * ,-----------------------------------------.                    ,-----------------------------------------.
+    * |      |  F1  |  F2  |  F3  |  F4  |  F5  |                    |  F6  |  F7  |  F8  |  F9  | F10  | F11  |
+    * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
+    * |  `   |   !  |   @  |   #  |   $  |   %  |                    |   ^  |   &  |   *  |   (  |   )  | F12  |
+    * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
+    * | TAB  |   =  |   -  |   +  |   {  |   }  |-------.    ,-------|   ;  |   :  |   _  |   [  |   ]  |   |  |
+    * |------+------+------+------+------+------|  MUTE |    |       |------+------+------+------+------+------|
+    * |LSHIFT|      |      |      |      |      |-------|    |-------|      |      |      |      |      |RSHIFT|
+    * `-----------------------------------------/       /     \      \-----------------------------------------'
+    *            | LCTRL| LALT | LGUI |LOWER | / SPACE /       \ENTER \  |RAISE | RGUI | RALT |RCTRL |
+    *            |      |      |      |      |/       /         \      \ |      |      |      |      |
+    *            `-----------------------------------'           '------''---------------------------'
+    */
+    [_RAISE] = LAYOUT(
+        _______,  KC_F1,   KC_F2,   KC_F3,    KC_F4,    KC_F5,                          KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,
+        KC_GRV,   KC_EXLM, KC_AT,   KC_HASH,  KC_DLR,   KC_PERC,                        KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_F12,
+        KC_TAB,   KC_EQL,  KC_MINS, KC_PLUS,  KC_LCBR,  KC_RCBR,                        KC_SCLN, KC_COLN, KC_UNDS, KC_LBRC, KC_RBRC, KC_PIPE,
+        KC_LSFT,  _______, _______, _______,  _______,  _______, KC_MUTE,      XXXXXXX, _______, _______, _______, _______, _______, KC_RSFT,
+                         KC_LCTL, KC_LALT, KC_LGUI,  TL_LOWR, KC_SPC,           KC_ENT, TL_UPPR,  KC_RGUI, KC_RALT, KC_RCTL
+    ),
+    
     /* ADJUST
     * ,------------------------------------------.                    ,-----------------------------------------.
     * |      |      |      |      |      |       |                    |      |      |      |      |      |      |
@@ -232,7 +253,6 @@ static void print_status_narrow(void) {
             oled_write_ln_P(PSTR("CLMK"), false);
             break;
         case 1:
-
             oled_write_ln_P(PSTR("Clmk"), false);
             break;
         default:
@@ -271,10 +291,10 @@ oled_rotation_t oled_init_user(oled_rotation_t rotation) {
 
 bool oled_task_user(void) {
     if (is_keyboard_master()) {
-	print_status_narrow();
+        print_status_narrow();
     } else {
         oled_clear();
-	oled_write_raw_P(image, sizeof(image));
+        oled_write_raw_P(image, sizeof(image));
     }
     return false;
 }
