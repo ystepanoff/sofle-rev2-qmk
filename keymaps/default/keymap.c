@@ -1,6 +1,7 @@
 #include QMK_KEYBOARD_H
 #ifdef OLED_ENABLE
 #include "oled_driver.h"
+#include "pet.h"
 #endif
 
 enum sofle_layers {
@@ -184,6 +185,22 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
             }
             break;
+        case KC_LCTL:
+        case KC_RCTL:
+            if (record->event.pressed) {
+                is_pet_sneaking = true;
+            } else {
+                is_pet_sneaking = false;
+            }
+            break;
+        case KC_SPC:
+            if (record->event.pressed) {
+                is_pet_jumping  = true;
+                is_jump_done = false;
+            } else {
+                is_pet_jumping = false;
+            }
+            break;
     }
     return true;
 }
@@ -244,6 +261,7 @@ static void print_status_narrow(void) {
     oled_write_P(PSTR("\n\n"), false);
     led_t led_usb_state = host_keyboard_led_state();
     oled_write_ln_P(PSTR("CPSLK"), led_usb_state.caps_lock);
+    render_pet(0, 10);
 }
 
 oled_rotation_t oled_init_user(oled_rotation_t rotation) {
