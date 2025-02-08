@@ -5,7 +5,7 @@
 
 enum sofle_layers {
     /* _M_XYZ = Mac Os, _W_XYZ = Win/Linux */
-    _COLEMAK_DH,
+    _BASE,
     _UPPER,
     _LOWER,
     _ADJUST,
@@ -20,7 +20,7 @@ enum custom_keycodes {
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /*
-    * COLEMAK-DH
+    * BASE (COLEMAK-DH)
     * ,-----------------------------------------.                    ,-----------------------------------------.
     * |  ESC |   1  |   2  |   3  |   4  |   5  |                    |   6  |   7  |   8  |   9  |   0  | BSPC |
     * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
@@ -34,7 +34,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     *            |      |      |      |      |/       /         \      \ |      |      |      |      |
     *            `-----------------------------------'           '------''---------------------------'
     */
-    [_COLEMAK_DH] = LAYOUT(
+    [_BASE] = LAYOUT(
         KC_ESC,   KC_1,   KC_2,    KC_3,    KC_4,     KC_5,                        KC_6,    KC_7,    KC_8,    KC_9,    KC_0,     KC_BSPC,
         KC_GRV,   KC_Q,   KC_W,    KC_F,    KC_P,     KC_B,                        KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN,  KC_BSLS,
         KC_TAB,   KC_A,   KC_R,    KC_S,    KC_T,     KC_G,                        KC_M,    KC_N,    KC_E,    KC_I,    KC_O,     KC_QUOT,
@@ -226,16 +226,16 @@ const char PROGMEM image[] = {
 #ifdef OLED_ENABLE
 static void print_status_narrow(void) {
     switch (get_highest_layer(layer_state)) {
-        case 0:
+        case _BASE:
             oled_write_P(PSTR("BASE\n\n"), false);
             break;
-        case 1:
+        case _UPPER:
             oled_write_P(PSTR("UPPER\n"), false);
             break;
-        case 2:
+        case _LOWER:
             oled_write_P(PSTR("LOWER\n"), false);
             break;
-        case 3:
+        case _ADJUST:
             oled_write_P(PSTR("ADJST\n"), false);
             break;
         default:
@@ -264,3 +264,25 @@ bool oled_task_user(void) {
 }
 #endif
 
+#ifdef ENCODER_ENABLE
+bool encoder_update_kb(uint8_t index, bool clockwise) {
+    if (!encoder_update_user(index, clockwise)) {
+        return false;
+    }
+    if (index == 0) {
+        // For some bizzare reason need to swap here
+        if (get_highest_layer(layer_state) == _UPPER) {
+            tap_code(clockwise ? KC_VOLD : KC_VOLU);
+        } else {
+            tap_code(clockwise ? KC_LEFT : KC_RIGHT);
+        }
+    } else if (index == 1) {
+        if (get_highest_layer(layer_state) == _UPPER) {
+            tap_code(clockwise ? KC_PGDN : KC_PGUP);
+        } else {
+            tap_code(clockwise ? KC_UP : KC_DOWN);
+        }
+    }
+    return true;
+}
+#endif
