@@ -1,7 +1,7 @@
 #include QMK_KEYBOARD_H
 #ifdef OLED_ENABLE
 #include "oled_driver.h"
-#include "pet.h"
+#include "pet/pet.h"
 #endif
 
 enum sofle_layers {
