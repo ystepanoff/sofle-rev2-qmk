@@ -230,13 +230,13 @@ static void print_status_narrow(void) {
             oled_write_P(PSTR("BASE\n\n"), false);
             break;
         case 1:
-            oled_write_P(PSTR("UPPER\n\n"), false);
+            oled_write_P(PSTR("UPPER\n"), false);
             break;
         case 2:
-            oled_write_P(PSTR("LOWER\n\n"), false);
+            oled_write_P(PSTR("LOWER\n"), false);
             break;
         case 3:
-            oled_write_P(PSTR("ADJUST\n\n"), false);
+            oled_write_P(PSTR("ADJST\n"), false);
             break;
         default:
             oled_write_ln_P(PSTR("Undef\n\n"), false);
