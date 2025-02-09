@@ -244,7 +244,7 @@ const char PROGMEM image[] = {
 static void print_status_narrow(void) {
     switch (get_highest_layer(layer_state)) {
         case _BASE:
-            oled_write_P(PSTR("-----BASE\n-----"), false);
+            oled_write_P(PSTR("-----ALPHA-----"), false);
             break;
         case _UPPER:
             oled_write_P(PSTR("-----UPPER-----"), false);
@@ -253,7 +253,7 @@ static void print_status_narrow(void) {
             oled_write_P(PSTR("-----LOWER-----"), false);
             break;
         case _ADJUST:
-            oled_write_P(PSTR("ADJST-----"), false);
+            oled_write_P(PSTR("-----ADJST-----"), false);
             break;
         default:
             oled_write_ln_P(PSTR("Undef\n\n"), false);
