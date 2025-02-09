@@ -244,16 +244,16 @@ const char PROGMEM image[] = {
 static void print_status_narrow(void) {
     switch (get_highest_layer(layer_state)) {
         case _BASE:
-            oled_write_P(PSTR("BASE\n\n"), false);
+            oled_write_P(PSTR("-----BASE\n-----"), false);
             break;
         case _UPPER:
-            oled_write_P(PSTR("UPPER\n"), false);
+            oled_write_P(PSTR("-----UPPER-----"), false);
             break;
         case _LOWER:
-            oled_write_P(PSTR("LOWER\n"), false);
+            oled_write_P(PSTR("-----LOWER-----"), false);
             break;
         case _ADJUST:
-            oled_write_P(PSTR("ADJST\n"), false);
+            oled_write_P(PSTR("ADJST-----"), false);
             break;
         default:
             oled_write_ln_P(PSTR("Undef\n\n"), false);
@@ -262,7 +262,7 @@ static void print_status_narrow(void) {
     led_t led_usb_state = host_keyboard_led_state();
     oled_write_ln_P(PSTR("CPSLK"), led_usb_state.caps_lock);
     current_wpm   = get_current_wpm();
-    render_pet(0, 10);
+    render_pet(0, 12);
 }
 
 oled_rotation_t oled_init_user(oled_rotation_t rotation) {
