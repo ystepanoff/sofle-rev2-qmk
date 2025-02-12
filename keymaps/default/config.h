@@ -1,9 +1,0 @@
-#pragma once
-
-#define TRI_LAYER_UPPER_LAYER 1
-#define TRI_LAYER_LOWER_LAYER 2
-#define TRI_LAYER_ADJUST_LAYER 3
-
-#define OLED_TIMEOUT 0
-#define OLED_BRIGHNESS 120
-#define SPLIT_WPM_ENABLE
