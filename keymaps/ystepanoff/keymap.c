@@ -296,13 +296,27 @@ bool encoder_update_kb(uint8_t index, bool clockwise) {
         } else {
             tap_code(clockwise ? KC_LEFT : KC_RIGHT);
         }
+        left_encoder_state = clockwise ? -1 : 1;
+        last_activity_left_encoder = timer_read32();
     } else if (index == 1) {
         if (get_highest_layer(layer_state) == _UPPER) {
             tap_code(clockwise ? KC_PGDN : KC_PGUP);
         } else {
             tap_code(clockwise ? KC_UP : KC_DOWN);
         }
+        right_encoder_state = clockwise ? -1 : 1;
+        last_activity_right_encoder = timer_read32();
     }
     return true;
+}
+
+void matrix_scan_user(void) {
+    uint32_t now = timer_read32();
+    if ((now - last_activity_left_encoder) > ENCODER_STATE_TIMEOUT) {
+        left_encoder_state = 0;
+    }
+    if ((now - last_activity_right_encoder) > ENCODER_STATE_TIMEOUT) {
+        right_encoder_state = 0;
+    }
 }
 #endif

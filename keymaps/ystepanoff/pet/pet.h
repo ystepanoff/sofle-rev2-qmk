@@ -1,9 +1,11 @@
+#include <stdint.h>
 #define WPM_SPEED_1 10
 #define WPM_SPEED_2 40
 
 #define ANIM_FRAME_DURATION 200
+#define ENCODER_STATE_TIMEOUT 2000
 
-#include "neko.h"
+#include "pets/neko.h"
 
 uint32_t anim_timer = 0;
 uint8_t current_frame = 0;
@@ -12,6 +14,11 @@ int current_wpm = 0;
 bool is_ctrl_pressed = false;
 bool is_pet_jumping  = false;
 bool is_pet_jump_done = true;
+
+int8_t left_encoder_state = 0;
+int8_t right_encoder_state = 0;
+uint32_t last_activity_left_encoder = 0;
+uint32_t last_activity_right_encoder = 0;
 
 void animate_pet(int x, int y) {
     if (!is_ctrl_pressed) {
@@ -35,6 +42,12 @@ void animate_pet(int x, int y) {
         oled_write_raw_P(caps[current_frame], ANIM_SIZE);
     } else if (is_ctrl_pressed) {
         oled_write_raw_P(ctrl[current_frame], ANIM_SIZE);
+    } else if ((left_encoder_state | right_encoder_state) != 0) {
+        const char (*frames)[2][ANIM_SIZE] = (const char (*)[2][ANIM_SIZE])pgm_read_ptr(&pet_directions[right_encoder_state + 1][left_encoder_state + 1]);
+        if (frames != NULL) {
+            const char *frame = (const char*)*frames + (current_frame * ANIM_SIZE);
+            oled_write_raw_P(frame, ANIM_SIZE);
+        }
     } else if (current_wpm <= WPM_SPEED_1) {
         oled_write_raw_P(low[current_frame], ANIM_SIZE);
     } else if (current_wpm <= WPM_SPEED_2) {
