@@ -2,7 +2,7 @@
 #include QMK_KEYBOARD_H
 #ifdef OLED_ENABLE
 #include "oled_driver.h"
-#include "pet/pet.h"
+#include "pet/pet.c"
 #endif
 
 enum sofle_layers {
@@ -297,6 +297,7 @@ bool encoder_update_kb(uint8_t index, bool clockwise) {
             tap_code(clockwise ? KC_LEFT : KC_RIGHT);
         }
         left_encoder_state = clockwise ? -1 : 1;
+        last_ctrl_direction = clockwise ? _CTRL_WEST : _CTRL_EAST;
         last_activity_left_encoder = timer_read32();
     } else if (index == 1) {
         if (get_highest_layer(layer_state) == _UPPER) {
@@ -305,6 +306,7 @@ bool encoder_update_kb(uint8_t index, bool clockwise) {
             tap_code(clockwise ? KC_UP : KC_DOWN);
         }
         right_encoder_state = clockwise ? -1 : 1;
+        last_ctrl_direction = clockwise ? _CTRL_NORTH : _CTRL_SOUTH;
         last_activity_right_encoder = timer_read32();
     }
     return true;

@@ -5,7 +5,7 @@
 #define ANIM_FRAME_DURATION 200
 #define ENCODER_STATE_TIMEOUT 2000
 
-#include "pets/neko.h"
+#include "pets/neko.c"
 
 uint32_t anim_timer = 0;
 uint8_t current_frame = 0;
@@ -19,6 +19,8 @@ int8_t left_encoder_state = 0;
 int8_t right_encoder_state = 0;
 uint32_t last_activity_left_encoder = 0;
 uint32_t last_activity_right_encoder = 0;
+
+enum ctrl_direction last_ctrl_direction = _CTRL_NORTH;
 
 void animate_pet(int x, int y) {
     if (!is_ctrl_pressed) {
@@ -41,7 +43,7 @@ void animate_pet(int x, int y) {
     if (led_usb_state.caps_lock) {
         oled_write_raw_P(caps[current_frame], ANIM_SIZE);
     } else if (is_ctrl_pressed) {
-        oled_write_raw_P(ctrl[current_frame], ANIM_SIZE);
+        oled_write_raw_P(ctrl[last_ctrl_direction][current_frame], ANIM_SIZE);
     } else if ((left_encoder_state | right_encoder_state) != 0) {
         const char (*frames)[2][ANIM_SIZE] = (const char (*)[2][ANIM_SIZE])pgm_read_ptr(&pet_directions[right_encoder_state + 1][left_encoder_state + 1]);
         if (frames != NULL) {
