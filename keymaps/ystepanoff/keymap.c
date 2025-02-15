@@ -3,10 +3,10 @@
 #ifdef OLED_ENABLE
 #include "oled_driver.h"
 #include "pet/pet.c"
+#include "dvd/dvd.c"
 #endif
 
 enum sofle_layers {
-    /* _M_XYZ = Mac Os, _W_XYZ = Win/Linux */
     _BASE,
     _UPPER,
     _LOWER,
@@ -206,41 +206,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     return true;
 }
 
-const char PROGMEM image[] = {
-    0,  0,  0,  0,  0,  192,192,128,0,  0,  128,192,192,0,  0,  0,
-    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  224,224,0,  0,  0,
-    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  224,224,0,  0,  0,  0,
-    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-    0,  0,  224,224,0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-    0,  0,  0,  0,  224,224,0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-    0,  0,  0,  0,  0,  0,  1,  7,  127,127,7,  1,  0,  62, 127,107,
-    105,105,111,110,28, 127,119,99, 99, 255,255,0,  28, 127,119,99,
-    99, 119,127,28, 0,  127,127,3,  1,  1,  0,  1,  1,  102,111,111,
-    95, 123,123,48, 0,  0,  0,  0,  0,  0,  127,127,28, 62, 119,99,
-    65, 28, 127,107,105,105,111,111,8,  3,  15, 254,248,252,63, 7,
-    1,  0,  127,127,99, 99, 99, 127,30, 28, 127,119,99, 99, 119,127,
-    28, 48, 121,73, 73, 75, 127,127,0,  0,  127,127,3,  1,  1,  28,
-    127,119,99, 99, 127,127,0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-    0,  0,  0,  0,  0,  3,  3,  3,  3,  3,  1,  0,  0,  0,  0,  0,
-    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  3,  3,  0,  0,  0,
-    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  24, 120,
-    240,192,192,248,56, 8,  0,  16, 248,248,0,  0,  0,  0,  0,  0,
-    240,248,24, 24, 248,240,0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-    3,  3,  3,  1,  0,  0,  0,  2,  3,  3,  2,  2,  0,  3,  3,  0,
-    1,  3,  3,  3,  3,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-};
-
 #ifdef OLED_ENABLE
 static void print_status_narrow(void) {
     switch (get_highest_layer(layer_state)) {
@@ -262,8 +227,6 @@ static void print_status_narrow(void) {
     oled_write_P(PSTR("\n\n"), false);
     led_t led_usb_state = host_keyboard_led_state();
     oled_write_ln_P(PSTR("CPSLK"), led_usb_state.caps_lock);
-    current_wpm   = get_current_wpm();
-    render_pet(0, 12);
 }
 
 oled_rotation_t oled_init_user(oled_rotation_t rotation) {
@@ -276,9 +239,10 @@ oled_rotation_t oled_init_user(oled_rotation_t rotation) {
 bool oled_task_user(void) {
     if (is_keyboard_master()) {
         print_status_narrow();
+        current_wpm = get_current_wpm();
+        render_pet(0, 12);
     } else {
-        oled_clear();
-        oled_write_raw_P(image, sizeof(image));
+        render_dvd();
     }
     return false;
 }
