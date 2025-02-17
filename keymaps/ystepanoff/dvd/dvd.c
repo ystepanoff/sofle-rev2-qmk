@@ -44,7 +44,7 @@ bool render_dvd(void) {
         dvd_x += dvd_v_x;
         dvd_y += dvd_v_y;
 
-        // Bbounce horizontally
+        // bounce horizontally
         if (dvd_x < 0) {
             dvd_x = 0;
             dvd_v_x = -dvd_v_x;
