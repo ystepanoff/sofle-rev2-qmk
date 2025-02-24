@@ -1,4 +1,3 @@
-#include <wctype.h>
 #include QMK_KEYBOARD_H
 #ifdef OLED_ENABLE
 #include "oled_driver.h"
