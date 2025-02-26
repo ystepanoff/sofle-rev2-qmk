@@ -16,7 +16,7 @@ enum custom_keycodes {
     KC_PRVWD = QK_USER,
     KC_NXTWD,
     KC_LSTRT,
-    KC_LEND
+    KC_LEND,
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -58,7 +58,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     *            `-----------------------------------'           '------''---------------------------'
     */
     [_UPPER] = LAYOUT(
-        _______,  KC_F1,   KC_F2,   KC_F3,    KC_F4,    KC_F5,                          KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,
+        QK_LLCK,  KC_F1,   KC_F2,   KC_F3,    KC_F4,    KC_F5,                          KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,
         KC_GRV,   KC_EXLM, KC_AT,   KC_HASH,  KC_DLR,   KC_PERC,                        KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_F12,
         KC_TAB,   KC_EQL,  KC_MINS, KC_PLUS,  KC_LCBR,  KC_RCBR,                        KC_SCLN, KC_COLN, KC_UNDS, KC_LBRC, KC_RBRC, KC_PIPE,
         KC_LSFT,  _______, _______, _______,  _______,  _______, KC_MUTE,      XXXXXXX, _______, _______, _______, _______, _______, KC_RSFT,
@@ -80,7 +80,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     *            `-----------------------------------'           '-------''---------------------------'
     */
     [_LOWER] = LAYOUT(
-        _______, _______, _______, _______, _______, _______,                        _______, _______,  _______, _______,   _______,    _______,
+        QK_LLCK, _______, _______, _______, _______, _______,                        _______, _______,  _______, _______,   _______,    _______,
         XXXXXXX, KC_INS,  KC_PSCR, KC_APP,  XXXXXXX, XXXXXXX,                        KC_PGUP, KC_PRVWD, KC_UP,   KC_NXTWD,  C(KC_BSPC), KC_BSPC,
         KC_CAPS, _______, _______, _______, XXXXXXX, XXXXXXX,                        KC_PGDN, KC_LEFT,  KC_DOWN, KC_RGHT,   KC_DEL,     _______,
         _______, KC_UNDO, KC_CUT, KC_COPY, KC_PASTE, XXXXXXX,  _______,    _______,  XXXXXXX, KC_LSTRT, XXXXXXX, KC_LEND,   XXXXXXX,    _______,
