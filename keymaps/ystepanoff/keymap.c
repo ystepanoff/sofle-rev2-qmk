@@ -40,7 +40,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_GRV,   KC_Q,   KC_W,    KC_F,    KC_P,     KC_B,                        KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN,  KC_BSLS,
         KC_TAB,   KC_A,   KC_R,    KC_S,    KC_T,     KC_G,                        KC_M,    KC_N,    KC_E,    KC_I,    KC_O,     KC_QUOT,
         KC_LSFT,  KC_Z,   KC_X,    KC_C,    KC_D,     KC_V,  KC_MUTE,     XXXXXXX, KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLSH,  KC_RSFT,
-                    KC_LCTL, KC_LALT, KC_LGUI,  TL_LOWR, KC_SPC,             KC_ENT, TL_UPPR, KC_RGUI, KC_RALT, KC_RCTL
+                    KC_LCTL, KC_LALT, KC_LGUI,  MO(_LOWER), KC_SPC,             KC_ENT, MO(_UPPER), KC_RGUI, KC_RALT, KC_RCTL
     ),
 
     /* UPPER
@@ -62,7 +62,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_GRV,   KC_EXLM, KC_AT,   KC_HASH,  KC_DLR,   KC_PERC,                        KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_F12,
         KC_TAB,   KC_EQL,  KC_MINS, KC_PLUS,  KC_LCBR,  KC_RCBR,                        KC_SCLN, KC_COLN, KC_UNDS, KC_LBRC, KC_RBRC, KC_PIPE,
         KC_LSFT,  _______, _______, _______,  _______,  _______, KC_MUTE,      XXXXXXX, _______, _______, _______, _______, _______, KC_RSFT,
-                         KC_LCTL, KC_LALT, KC_LGUI,  TL_LOWR, KC_SPC,           KC_ENT, TL_UPPR,  KC_RGUI, KC_RALT, KC_RCTL
+                         KC_LCTL, KC_LALT, KC_LGUI,  _______, KC_SPC,           KC_ENT, _______,  KC_RGUI, KC_RALT, KC_RCTL
     ),
 
     /* LOWER
@@ -74,7 +74,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     * | CAPS |      |      |      |      |      |--------.   ,-------| PGDN | LEFT | DOWN |RIGHT | DEL  |      |
     * |------+------+------+------+------+------|  MUTE  |   |       |------+------+------+------+------+------|
     * |LSHIFT| UNDO |  CUT | COPY | PASTE|      |--------|   |-------|      | LSTR |      | LEND |      |RSHIFT|
-    * `-----------------------------------------/       /     \       \-----------------------------------------'
+    * `-----------------------------------------/       /     \       \----------------------------------------'
     *            |LCTRL | LALT | LGUI |LOWER | / SPACE /       \ ENTER \  |RAISE | RGUI | RALT |RCTRL |
     *            |      |      |      |      |/       /         \       \ |      |      |      |      |
     *            `-----------------------------------'           '-------''---------------------------'
@@ -96,13 +96,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     * |      |      |MACWIN|      |      |       |-------.    ,-------|      | VOLD | MUTE | VOLU |      |      |
     * |------+------+------+------+------+-------|  MUTE |    |       |------+------+------+------+------+------|
     * |      |      |      |      |      |       |-------|    |-------|      | PREV | PLAY | NEXT |      |      |
-    * `------------------------------------------/       /     \      \-----------------------------------------'
-    *            | LCTRL | LALT | LGUI |LOWER | / ENTER /       \Space \  |RAISE | RGUI | RALT | RCTRL |
-    *            |       |      |      |      |/       /         \      \ |      |      |      |       |
-    *            `------------------------------------'           '------''----------------------------'
+    * `------------------------------------------/       /     \       \----------------------------------------'
+    *            | LCTRL | LALT | LGUI |LOWER | / SPACE /       \ ENTER \  |RAISE | RGUI | RALT | RCTRL |
+    *            |       |      |      |      |/       /         \       \ |      |      |      |       |
+    *            `------------------------------------'           '-------''----------------------------'
     */
     [_ADJUST] = LAYOUT(
-        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        QK_LLCK, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
         QK_BOOT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
         XXXXXXX, XXXXXXX, CG_TOGG, XXXXXXX, XXXXXXX, XXXXXXX,                       XXXXXXX, KC_VOLD, KC_MUTE, KC_VOLU, XXXXXXX, XXXXXXX,
         XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,     XXXXXXX, XXXXXXX, KC_MPRV, KC_MPLY, KC_MNXT, XXXXXXX, XXXXXXX,
@@ -110,8 +110,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     )
 };
 
+static bool adjust_locked = false;
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
+        case QK_LLCK:
+            if (record->event.pressed) {
+                uint8_t current_layer = get_highest_layer(layer_state);
+                if (current_layer == _ADJUST) {
+                    adjust_locked = !adjust_locked;
+                }
+                layer_lock_invert(current_layer);
+            }
+            return false;
         case KC_PRVWD:
             if (record->event.pressed) {
                 if (keymap_config.swap_lctl_lgui) {
@@ -205,6 +216,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     return true;
 }
 
+layer_state_t layer_state_set_user(layer_state_t state) {
+    if (adjust_locked) {
+        state |= (1 << _ADJUST);
+        return state;
+    }
+    return update_tri_layer_state(state, _LOWER, _UPPER, _ADJUST);
+}
+
+// OLED
 #ifdef OLED_ENABLE
 static void print_status_narrow(void) {
     switch (get_highest_layer(layer_state)) {
@@ -247,8 +267,8 @@ bool oled_task_user(void) {
 }
 #endif
 
+// Encoders
 #ifdef ENCODER_ENABLE
-
 uint8_t left_encoder_parity = 0;
 uint8_t right_encoder_parity = 0;
 
