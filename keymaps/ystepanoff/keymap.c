@@ -269,7 +269,6 @@ bool oled_task_user(void) {
 
 // Encoders
 #ifdef ENCODER_ENABLE
-uint8_t left_encoder_parity = 0;
 uint8_t right_encoder_parity = 0;
 
 bool encoder_update_kb(uint8_t index, bool clockwise) {
@@ -277,24 +276,15 @@ bool encoder_update_kb(uint8_t index, bool clockwise) {
         return false;
     }
     if (index == 0) {
-        left_encoder_parity ^= 1;
-        if (left_encoder_parity) {
-            return true;
-        }
-        // For some bizzare reason need to swap here
         if (get_highest_layer(layer_state) == _UPPER) {
-            tap_code(clockwise ? KC_VOLD : KC_VOLU);
+            tap_code(clockwise ? KC_VOLU : KC_VOLD);
         } else {
-            tap_code(clockwise ? KC_LEFT : KC_RIGHT);
+            tap_code(clockwise ? KC_RIGHT : KC_LEFT);
         }
-        left_encoder_state = clockwise ? -1 : 1;
-        last_ctrl_direction = clockwise ? _CTRL_WEST : _CTRL_EAST;
+        left_encoder_state = clockwise ? 1: -1;
+        last_ctrl_direction = clockwise ? _CTRL_EAST : _CTRL_WEST;
         last_activity_left_encoder = timer_read32();
     } else if (index == 1) {
-        right_encoder_parity ^= 1;
-        if (right_encoder_parity) {
-            return true;
-        }
         if (get_highest_layer(layer_state) == _UPPER) {
             tap_code(clockwise ? KC_PGDN : KC_PGUP);
         } else {
