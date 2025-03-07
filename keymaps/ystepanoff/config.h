@@ -6,4 +6,5 @@
 
 #define OLED_TIMEOUT 0
 #define OLED_BRIGHNESS 120
+
 #define SPLIT_WPM_ENABLE

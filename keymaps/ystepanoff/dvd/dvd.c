@@ -74,6 +74,6 @@ bool render_dvd(void) {
         }
     }
 
-    oled_write_raw_P((const char *)oled_buffer, sizeof(oled_buffer));
+    oled_write_raw((const char *)oled_buffer, sizeof(oled_buffer));
     return false;
 }
