@@ -269,8 +269,6 @@ bool oled_task_user(void) {
 
 // Encoders
 #ifdef ENCODER_ENABLE
-uint8_t right_encoder_parity = 0;
-
 bool encoder_update_kb(uint8_t index, bool clockwise) {
     if (!encoder_update_user(index, clockwise)) {
         return false;
