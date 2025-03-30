@@ -13,7 +13,7 @@
 // Light combinations
 #define SET_INDICATORS(hsv) \
 	{0, 1, HSV_OVERRIDE_HELP(hsv, INDICATOR_BRIGHTNESS)}, \
-    {35+0, 1, hsv}
+    {35+0, 1, HSV_OVERRIDE_HELP(hsv, INDICATOR_BRIGHTNESS)}
 #define SET_UNDERGLOW(hsv) \
 	{1, 6, hsv}, \
     {35+1, 6,hsv}
@@ -89,29 +89,29 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     /* UPPER
     * ,-----------------------------------------.                    ,-----------------------------------------.
-    * |      |  F1  |  F2  |  F3  |  F4  |  F5  |                    |  F6  |  F7  |  F8  |  F9  | F10  | F11  |
+    * | LLCK |  F1  |  F2  |  F3  |  F4  |  F5  |                    |  F6  |  F7  |  F8  |  F9  | F10  | F11  |
     * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
-    * |  `   |   !  |   @  |   #  |   $  |   %  |                    |   ^  |   &  |   *  |   (  |   )  | F12  |
+    * |  `   |   !  |   @  |   #  |   $  |   %  |                    |   ^  |   &  |   *  |   -  |   +  | F12  |
     * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
-    * | TAB  |   =  |   -  |   +  |   {  |   }  |-------.    ,-------|   ;  |   :  |   _  |   [  |   ]  |   |  |
+    * | TAB  |   =  |   -  |   +  |   =  |   _  |-------.    ,-------| HOME |  END |  DEL | UNDO |  CUT |  |   |
     * |------+------+------+------+------+------|  MUTE |    |       |------+------+------+------+------+------|
-    * |LSHIFT|      |      |      |      |      |-------|    |-------|      |      |      |      |      |RSHIFT|
+    * |LSHIFT|   *  |   /  |   {  |   [  |   (  |-------|    |-------|   )  |   ]  |   }  | COPY | PASTE|RSHIFT|
     * `-----------------------------------------/       /     \      \-----------------------------------------'
     *            | LCTRL| LALT | LGUI |LOWER | / SPACE /       \ENTER \  |RAISE | RGUI | RALT |RCTRL |
     *            |      |      |      |      |/       /         \      \ |      |      |      |      |
     *            `-----------------------------------'           '------''---------------------------'
     */
     [_UPPER] = LAYOUT(
-        QK_LLCK,  KC_F1,   KC_F2,   KC_F3,    KC_F4,    KC_F5,                          KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,
-        KC_GRV,   KC_EXLM, KC_AT,   KC_HASH,  KC_DLR,   KC_PERC,                        KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_F12,
-        KC_TAB,   KC_EQL,  KC_MINS, KC_PLUS,  KC_LCBR,  KC_RCBR,                        KC_SCLN, KC_COLN, KC_UNDS, KC_LBRC, KC_RBRC, KC_PIPE,
-        KC_LSFT,  _______, _______, _______,  _______,  _______, KC_MUTE,      XXXXXXX, _______, _______, _______, _______, _______, KC_RSFT,
+        QK_LLCK,  KC_F1,   KC_F2,   KC_F3,    KC_F4,    KC_F5,                          KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,   KC_F11,
+        KC_GRV,   KC_EXLM, KC_AT,   KC_HASH,  KC_DLR,   KC_PERC,                        KC_CIRC, KC_AMPR, KC_ASTR, KC_MINS, KC_PLUS,  KC_F12,
+        KC_TAB,   KC_EQL,  KC_MINS, KC_PLUS,  KC_EQL,   KC_UNDS,                        KC_HOME, KC_END,  KC_DEL,  KC_UNDO, KC_CUT,   KC_PIPE,
+        KC_LSFT,  XXXXXXX, XXXXXXX, KC_LCBR,  KC_LBRC,  KC_LPRN, KC_MUTE,      XXXXXXX, KC_RPRN, KC_RBRC, KC_RCBR, KC_COPY, KC_PASTE, KC_RSFT,
                          KC_LCTL, KC_LALT, KC_LGUI,  _______, KC_SPC,           KC_ENT, _______,  KC_RGUI, KC_RALT, KC_RCTL
     ),
 
     /* LOWER
     * ,-----------------------------------------.                    ,-----------------------------------------.
-    * |      |      |      |      |      |      |                    |      |      |      |      |      |      |
+    * | LLCK |      |      |      |      |      |                    |      |      |      |      |      |      |
     * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
     * |      | INS  |PRSCR | MENU |      |      |                    | PGUP | PWRD |  UP  | NWRD |      | BSPC |
     * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
@@ -133,7 +133,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     /* ADJUST
     * ,------------------------------------------.                    ,-----------------------------------------.
-    * |      |      |      |      |      |       |                    |      |      |      |      |      |      |
+    * | LLCK |      |      |      |      |       |                    |      |      |      |      |      |      |
     * |------+------+------+------+------+-------|                    |------+------+------+------+------+------|
     * | BOOT |      |      |      |      |       |                    |      |      |      |      |      |      |
     * |------+------+------+------+------+-------|                    |------+------+------+------+------+------|
@@ -156,16 +156,23 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 #ifdef RGBLIGHT_ENABLE
 const rgblight_segment_t PROGMEM layer_base_lights[] = RGBLIGHT_LAYER_SEGMENTS(
-  SET_LAYER_ID(HSV_PINK)
+  SET_INDICATORS(HSV_PINK)
 );
 const rgblight_segment_t PROGMEM layer_upper_lights[] = RGBLIGHT_LAYER_SEGMENTS(
     SET_INDICATORS(HSV_ORANGE),
     SET_UNDERGLOW(HSV_ORANGE),
-    SET_NUMPAD(HSV_BLUE),
-    {7, 4, HSV_ORANGE},
+    {11, 1, HSV_RED},
+    {12, 1, HSV_GREEN},
+    {21, 2, HSV_GREEN},
+    {31, 2, HSV_GREEN},
+    {35+12, 1, HSV_GREEN},
+    {35+21, 2, HSV_GREEN},
+    {35+31, 2, HSV_GREEN}
+    /*SET_NUMPAD(HSV_BLUE),
+    {7, 2, HSV_ORANGE},
     {25, 2, HSV_ORANGE},
-    {35+6, 4, HSV_ORANGE},
-    {35+25, 2, HSV_ORANGE}
+    {25, 2, HSV_ORANGE},
+    {25, 2, HSV_ORANGE}*/
 );
 const rgblight_segment_t PROGMEM layer_lower_lights[] = RGBLIGHT_LAYER_SEGMENTS(
     SET_LAYER_ID(HSV_GREEN),
@@ -184,7 +191,7 @@ const rgblight_segment_t* const PROGMEM my_rgb_layers[] = RGBLIGHT_LAYERS_LIST(
 void keyboard_post_init_user(void) {
     rgblight_layers = my_rgb_layers;
 
-	rgblight_mode(10);// haven't found a way to set this in a more useful way
+	//rgblight_mode(24);// haven't found a way to set this in a more useful way
 
 }
 #endif
