@@ -1,9 +1,17 @@
+#include "config.h"
 #include QMK_KEYBOARD_H
 #ifdef OLED_ENABLE
 #include "oled_driver.h"
 #include "pet/pet.c"
 #include "dvd/dvd.c"
 #endif
+
+#include "gpio.h"
+
+void keyboard_pre_init_user(void) {
+    gpio_set_pin_output(24);
+    gpio_write_pin_high(24);
+}
 
 #define INDICATOR_BRIGHTNESS 30
 
@@ -156,18 +164,59 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 #ifdef RGBLIGHT_ENABLE
 const rgblight_segment_t PROGMEM layer_base_lights[] = RGBLIGHT_LAYER_SEGMENTS(
-  SET_INDICATORS(HSV_PINK)
+    //SET_LAYER_ID(HSV_ORANGE)
+    SET_INDICATORS(HSV_ORANGE),
+    SET_UNDERGLOW(HSV_ORANGE)
 );
 const rgblight_segment_t PROGMEM layer_upper_lights[] = RGBLIGHT_LAYER_SEGMENTS(
-    SET_INDICATORS(HSV_ORANGE),
-    SET_UNDERGLOW(HSV_ORANGE),
-    {11, 1, HSV_RED},
-    {12, 1, HSV_GREEN},
-    {21, 2, HSV_GREEN},
-    {31, 2, HSV_GREEN},
-    {35+12, 1, HSV_GREEN},
-    {35+21, 2, HSV_GREEN},
-    {35+31, 2, HSV_GREEN}
+    SET_INDICATORS(HSV_MAGENTA),
+    SET_UNDERGLOW(HSV_MAGENTA),
+
+    {11, 1, HSV_CORAL},
+
+    {12, 1, HSV_BLUE},
+    {21, 2, HSV_BLUE},
+    {31, 2, HSV_BLUE},
+    {35+10, 3, HSV_BLUE},
+    {35+21, 2, HSV_BLUE},
+    {35+31, 2, HSV_BLUE},
+
+    {10, 1, HSV_PURPLE},
+    {13, 3, HSV_PURPLE},
+    {18, 3, HSV_PURPLE},
+    {23, 2, HSV_PURPLE},
+    {29, 2, HSV_PURPLE},
+    {33, 2, HSV_PURPLE},
+    {35+13, 1, HSV_PURPLE},
+    {35+20, 1, HSV_PURPLE},
+    {35+23, 1, HSV_PURPLE},
+    {35+30, 1, HSV_PURPLE},
+    {35+33, 1, HSV_PURPLE},
+    {35+9, 1, HSV_PURPLE},
+
+    {35+14, 2, HSV_CHARTREUSE},
+    {35+18, 2, HSV_CHARTREUSE},
+    {35+24, 1, HSV_CHARTREUSE},
+    {35+29, 1, HSV_CHARTREUSE},
+    {35+34, 1, HSV_CHARTREUSE},
+
+    {25, 1, HSV_ORANGE},
+    {28, 1, HSV_ORANGE},
+    {35, 1, HSV_ORANGE},
+    {35+25, 1, HSV_ORANGE},
+    {35+28, 1, HSV_ORANGE},
+    {35+35, 1, HSV_ORANGE},
+
+    {7, 1, HSV_MAGENTA},
+    {16, 2, HSV_MAGENTA},
+    {26, 1, HSV_MAGENTA},
+    {35+7, 1, HSV_MAGENTA},
+    {35+16, 2, HSV_MAGENTA},
+    {35+26, 1, HSV_MAGENTA},
+
+    {27, 1, HSV_RED},
+    {35+27, 1, HSV_RED}
+
     /*SET_NUMPAD(HSV_BLUE),
     {7, 2, HSV_ORANGE},
     {25, 2, HSV_ORANGE},
@@ -191,7 +240,7 @@ const rgblight_segment_t* const PROGMEM my_rgb_layers[] = RGBLIGHT_LAYERS_LIST(
 void keyboard_post_init_user(void) {
     rgblight_layers = my_rgb_layers;
 
-	//rgblight_mode(24);// haven't found a way to set this in a more useful way
+	rgblight_mode(RGBLIGHT_MODE_RAINBOW_SWIRL + 5);// haven't found a way to set this in a more useful way
 
 }
 #endif
