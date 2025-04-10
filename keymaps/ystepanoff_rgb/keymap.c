@@ -368,27 +368,29 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 static void print_status_narrow(void) {
     switch (get_highest_layer(layer_state)) {
         case _BASE:
-            oled_write_P(PSTR("-----ALPHA-----"), false);
+            oled_write_P(PSTR("----------COLEMAK-DH----------"), false);
             break;
         case _UPPER:
-            oled_write_P(PSTR("-----UPPER-----"), false);
+            oled_write_P(PSTR("----------  UPPER   ----------"), false);
             break;
         case _LOWER:
-            oled_write_P(PSTR("-----LOWER-----"), false);
+            oled_write_P(PSTR("----------  LOWER   ----------"), false);
             break;
         case _ADJUST:
-            oled_write_P(PSTR("-----ADJST-----"), false);
+            oled_write_P(PSTR("----------  ADJUST  ----------"), false);
             break;
         default:
             oled_write_ln_P(PSTR("Undef\n\n"), false);
     }
     oled_write_P(PSTR("\n\n"), false);
     led_t led_usb_state = host_keyboard_led_state();
-    oled_write_ln_P(PSTR("CPSLK"), led_usb_state.caps_lock);
+    if (led_usb_state.caps_lock) {
+        oled_write_ln_P(PSTR(" CAPSLOCK "), 1);
+    }
 }
 
 oled_rotation_t oled_init_user(oled_rotation_t rotation) {
-    if (is_keyboard_master()) {
+    if (!is_keyboard_master()) {
         return OLED_ROTATION_270;
     }
     return rotation;
@@ -398,7 +400,7 @@ bool oled_task_user(void) {
     if (is_keyboard_master()) {
         print_status_narrow();
         current_wpm = get_current_wpm();
-        render_pet(0, 12);
+        render_pet(64, 0);
     } else {
         render_dvd();
     }

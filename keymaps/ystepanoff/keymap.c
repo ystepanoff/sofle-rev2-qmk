@@ -259,7 +259,7 @@ bool oled_task_user(void) {
     if (is_keyboard_master()) {
         print_status_narrow();
         current_wpm = get_current_wpm();
-        render_pet(0, 12);
+        render_pet(32, 32);
     } else {
         render_dvd();
     }

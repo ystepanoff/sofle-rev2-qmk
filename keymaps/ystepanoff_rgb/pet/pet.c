@@ -1,6 +1,6 @@
 #include <stdint.h>
 #include "pets/common.c"
-#include "pets/neko.c"
+#include "pets/neko64.c"
 
 void animate_pet(int x, int y) {
     if (!is_ctrl_pressed) {

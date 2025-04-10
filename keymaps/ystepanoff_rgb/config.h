@@ -5,14 +5,14 @@
 #define TRI_LAYER_ADJUST_LAYER 3
 
 #define OLED_TIMEOUT 0
-#define OLED_BRIGHNESS 120
+#define OLED_BRIGHTNESS 60
+#define OLED_IC OLED_IC_SH1107
+#define OLED_DISPLAY_64X128
 
 #define SPLIT_WPM_ENABLE
 
 #define CUSTOM_FONT
-
-#define CUSTOM_LAYER_READ //if you remove this it causes issues - needs better guarding
-
+#define CUSTOM_LAYER_READ
 
 #define QUICK_TAP_TERM 0
 #ifdef TAPPING_TERM

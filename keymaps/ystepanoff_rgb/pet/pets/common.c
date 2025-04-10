@@ -1,7 +1,7 @@
 #define WPM_SPEED_1 10
 #define WPM_SPEED_2 40
 
-#define ANIM_FRAME_DURATION 200
+#define ANIM_FRAME_DURATION 300
 #define ENCODER_STATE_TIMEOUT 2000
 
 uint32_t anim_timer = 0;
